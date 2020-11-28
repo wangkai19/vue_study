@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>单项数据绑定和双向数据绑定</title>
+</head>
+
+<body>
+    <div id="app">
+        我输入的：<input type="text" name="" v-model="instring"></br>
+        我输出的：{{ instring }}</br>
+        {{ instring | reversal('翻转后：') }}
+    </div>
+
+    <script type="text/javascript" src="vue.js"></script>
+    <!--单项数据绑定和双向数据绑定-->
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            // template:`
+            //     <div>单向数据绑定
+            //         <input type="text" v-bind:value="name" :class="name"><br>
+            //         双向数据绑定
+            //         <input type='text' v-model="name"></br>
+            //         <button v-on:click="change">点我改变内容</button><br>
+            //         {{ name }}
+            //     </div>
+            // `,
+            data: function () {
+                return {
+                    name: "hello",
+                    instring: ''
+                }
+            },
+            methods: {
+                change: function () {
+                    this.name = '我是乔巴'
+                }
+            },
+            filters: {
+                reversal(val, arg2) {
+                    //            字符串转数组     翻转       数组转字符串    
+                    return arg2 + val.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

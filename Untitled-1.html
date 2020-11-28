@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <!--常用指令-->
+    <script type="text/javascript" src="vue.js"></script>
+     
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            template: `
+                <div>
+                    <div>这是一个测试代码第一行：{{ mes }}</div>
+                    <div v-text='mytext'></div>
+
+                    <div v-html='myhtml'></div>
+
+                    <button v-if='num==1'>这是一个按钮1</button>
+                    <button v-else-if='num==2'>这是一个按钮2</button>
+                    <button v-else>这是一个按钮3</button>
+                    <div v-show="checkshow">我是v-show</div>
+                </div>`,
+            data: function () {
+                return {
+                    mes: 'VUE!!',
+                    mytext: '<h1>这是一个测试代码第二行</h1>',
+                    myhtml: '<h1>这是一个测试代码第三行</h1>',
+                    num: 6,
+                    checkshow: true,
+                    arrayfor: ['路飞', '乔巴', '索隆']
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
