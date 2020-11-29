@@ -10,15 +10,22 @@
         我输入的：<input type="text" name="" v-model="instring"></br>
         我输出的：{{ instring }}</br>
         {{ instring | reversal('翻转后：') }}
+        <div>watch监听数据</div>
+        <input type="text" v-model="mes.text">
     </div>
 
     <script type="text/javascript" src="vue.js"></script>
     <!--单项数据绑定和双向数据绑定-->
     <script type="text/javascript">
+        //全局过滤器
+        console.log(this)
+        Vue.filter('reversal', function (val, arg2) {
+            return arg2 + val.split('').reverse().join('')
+        })
         new Vue({
             el: '#app',
             // template:`
-            //     <div>单向数据绑定
+            //     <div>单向数据绑定 
             //         <input type="text" v-bind:value="name" :class="name"><br>
             //         双向数据绑定
             //         <input type='text' v-model="name"></br>
@@ -26,10 +33,14 @@
             //         {{ name }}
             //     </div>
             // `,
+            created() {
+                console.log(this, 'vue的')
+            },
             data: function () {
                 return {
                     name: "hello",
-                    instring: ''
+                    instring: '',
+                    mes: {text:''}
                 }
             },
             methods: {
@@ -37,12 +48,30 @@
                     this.name = '我是乔巴'
                 }
             },
-            filters: {
-                reversal(val, arg2) {
-                    //            字符串转数组     翻转       数组转字符串    
-                    return arg2 + val.split('').reverse().join('')
+            watch: {
+                //简单监听
+                // mes(newIn,oldIn){
+                //     // console.log(oldvar,newvar)
+                //     if(newIn=='love'){
+                //         alert(newIn)
+                //     }
+                // }
+                mes:{
+                    handler(newIn,oldIn){
+                        if(newIn.text == 'love'){
+                            alert(newIn.text)
+                        }
+                    },
+                    deep:true
                 }
             }
+            //局部过滤器
+            // filters: {
+            //     reversal(val, arg2) {
+            //         //            字符串转数组     翻转       数组转字符串    
+            //         return arg2 + val.split('').reverse().join('')
+            //     }
+            // }
         })
     </script>
 </body>
