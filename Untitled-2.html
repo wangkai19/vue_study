@@ -12,6 +12,10 @@
         {{ instring | reversal('翻转后：') }}
         <div>watch监听数据</div>
         <input type="text" v-model="mes.text">
+        <div>computed计算属性</div>
+        (<input type="text" name='' v-model="n1"> +
+        <input type="text" name='' v-model="n2">) *
+        <input type="text" name='' v-model="n3"> == {{ result }}
     </div>
 
     <script type="text/javascript" src="vue.js"></script>
@@ -40,7 +44,10 @@
                 return {
                     name: "hello",
                     instring: '',
-                    mes: {text:''}
+                    mes: { text: '' },
+                    n1:"",
+                    n2:"",
+                    n3:"1"　
                 }
             },
             methods: {
@@ -56,15 +63,21 @@
                 //         alert(newIn)
                 //     }
                 // }
-                mes:{
-                    handler(newIn,oldIn){
-                        if(newIn.text == 'love'){
+                mes: {
+                    handler(newIn, oldIn) {
+                        if (newIn.text == 'love') {
                             alert(newIn.text)
                         }
                     },
-                    deep:true
+                    deep: true
+                }
+            },
+            computed:{
+                result(){
+                    return (Number(this.n1)+Number(this.n2))*Number(this.n3)
                 }
             }
+
             //局部过滤器
             // filters: {
             //     reversal(val, arg2) {
