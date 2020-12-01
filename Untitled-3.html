@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <title>组件化开发</title>
+</head>
+
+<body>
+    <div id='app'></div>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript">
+        var MyHeader = {
+            template: `<div>我是头部</div>`
+        }
+        var MyBody = Vue.extend({
+            template: `<div>我是身体</div>`
+        })
+
+        Vue.component('MyFooter', {
+            template: `<div>我是尾巴</div>`
+        })
+
+        new Vue({
+            el: '#app',
+            components: {
+                MyBody, MyHeader
+            },
+            template: `
+                    <div>
+                        <my-header></my-header>
+                        <my-body></my-body>
+                        <my-footer></my-footer>
+                    </div>
+            `
+        })
+    </script>
+</body>
+
+</html>
