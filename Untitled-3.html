@@ -19,16 +19,56 @@
             template: `<div>我是尾巴</div>`
         })
 
+        var Child = {
+            template: `
+                    <div>
+                        我是子组件
+                    </div>
+            `,
+            data(){
+                return {
+                    msg:'hello'
+                }
+            },
+            created(){
+                console.log(this.$parent)
+            }
+        }
+
+        var Parent = {
+            template: `<div>我是父组件
+                        <slot name='hello'></slot>
+                        <child ref='childs'></child>
+                        </div>`,
+
+            components: {
+                Child
+            },
+            mounted(){
+                console.log(this.$refs.childs.$el)
+
+            },
+            data(){
+                return{
+                    parent:'我是父组件'
+                }
+            }
+        }
+
         new Vue({
             el: '#app',
             components: {
-                MyBody, MyHeader
+                MyBody, MyHeader, Parent
             },
             template: `
                     <div>
                         <my-header></my-header>
                         <my-body></my-body>
                         <my-footer></my-footer>
+                        <parent>
+                            <div>我是插槽内容1</div>
+                            <div slot='hello'>我是插槽内容2</div>
+                        </parent>
                     </div>
             `
         })
