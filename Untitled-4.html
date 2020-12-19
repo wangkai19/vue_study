@@ -1,0 +1,71 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父子组件间的通讯</title>
+</head>
+
+<body>
+    <div id='app'></div>
+    <script type="text/javascript" src="vue.js"></script>
+    <script>
+        //子组件定义好了props直接用
+        var Child = {
+            template: `
+                <div>
+                    我是子组件，这是父组件传递给我的值{{sendData}}
+                    <button @click='sendDataToParent'>这是给父组件传值的按钮</button>
+                </div>
+                `,
+            props: ['sendData'],
+            methods: {
+                sendDataToParent() {
+                    this.$emit('flag', 'helloWorld')
+                }
+            },
+        }
+
+        //父组件通过属性将值传递给了子组件
+        var Parent = {
+            template: `
+                <div>
+                我是父组件 {{ msg }}
+                <child sendData='helloWorld' @flag='reserve'></child>
+                </div>
+                    
+            `,
+            components: {
+                Child
+            },
+            data() {
+                return {
+                    msg: ''
+                }
+            },
+            methods: {
+                reserve(val) {
+                    this.msg = val
+                }
+            }
+        }
+
+
+        new Vue({
+            el: '#app',
+            components: {
+                Parent
+            },
+            template: `
+                <div>
+                    <parent></parent>
+                </div>
+            `
+        })
+
+    </script>
+
+
+</body>
+
+</html>
