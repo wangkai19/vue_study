@@ -1,0 +1,82 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非子组件间的通讯</title>
+</head>
+
+<body>
+    <div id='app'></div>
+    <script type="text/javascript" src="vue.js"></script>
+    <script>
+
+        Vue.prototype.$bus=new Vue()
+
+        var MyHeader = {
+            template: `
+                <div>
+                    我是头部
+                    我是头部信息:{{ headMsg }}
+                </div>
+            `,
+            data() {
+                return {
+                    headMsg: 'hello world'
+                }
+            },
+            created(){
+                // var self = this
+                // self.$bus.$on('flag',function(val){
+                //     self.headMsg=val
+                // })
+                this.$bus.$on('flag',val=>{
+                    this.headMsg=val
+                })
+            }
+
+
+        }
+        var MyBody = {
+            template: `
+                <div>我是身体</div>
+            `
+        }
+        var MyFooter = {
+            template: `
+                <div>
+                    我是尾巴
+                    <button @click='sendDataToParent'>点我给头部传信息</button>
+                </div>
+            `,
+            methods: {
+                sendDataToParent(){
+                    this.$bus.$emit('flag','goodbye world')
+                }
+            }
+        }
+
+        new Vue({
+            el: '#app',
+            components: {
+                MyHeader, MyBody, MyFooter
+            },
+            template: `
+                <div>
+                    <my-header></my-header><hr>
+                    <my-body></my-body><hr>
+                    <my-footer></my-footer><hr>
+                </div>
+            `
+
+
+
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>
