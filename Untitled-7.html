@@ -1,0 +1,67 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路由跳转原理,路由的安装和使用</title>
+</head>
+
+<body>
+    <div id="app1">
+        <a href="#/login">登陆</a>
+        |
+        <a href="#/register">注册</a>
+    </div>
+    <div id="app2">
+        <a href="#/admin">用户管理啊</a>
+    </div>
+
+    <!--引入路由插件-->
+    <script src="vue-router.js"></script>
+    <script src="vue.js"></script>
+    <script type="text/javascript">
+        var appdiv = document.getElementById('app1')
+        window.addEventListener('hashchange', function (e) {
+            console.log(location.hash)
+            switch (location.hash) {
+                case '#/login':
+                    appdiv.innerHTML = '我是登陆页面';
+                    break;
+                case '#/register':
+                    appdiv.innerHTML = '我是注册页面';
+                    break;
+
+            }
+        })
+        // 定义管理组件页面
+        var Admin = {
+            template: `
+                <div>这是一个管理员页面</div>
+            `
+        }
+        // 安装路由插件
+        Vue.use(VueRouter);
+        // 创建一个路由对象
+        var router = new VueRouter({
+            // 配置一个路由对象
+            routes: [
+                { path: '/admin', name : 'admin', component:Admin }
+            ]
+        })
+        var vm = new Vue({
+            el: '#app2',
+            router,
+            template: `
+                <div>
+                    <router-view></router-view>    
+                </div>
+            `,
+            date() {
+                return {}
+            }
+        })
+
+    </script>
+</body>
+
+</html>
